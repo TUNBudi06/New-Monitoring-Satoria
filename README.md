@@ -139,3 +139,8 @@ This documentation provides a comprehensive overview of your project, including 
 The document covers all the plugins and libraries used in your project as shown in the package.json file, along with explanations of their purpose. It also includes information about the theming system as shown in your app.css file and the layout structure based on your +layout.svelte files.
 
 You can save this as `README.md` in the root of your repository to provide immediate documentation for anyone accessing the project.
+## Release Information
+
+This repository contains only the compiled version of the monitoring system. It is updated automatically via GitHub Actions.
+
+Last updated: Wed May 21 16:24:19 UTC 2025
