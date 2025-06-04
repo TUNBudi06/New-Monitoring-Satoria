@@ -4,13 +4,17 @@
 
 This project is a modern web application for monitoring systems at PT. Satoria Aneka Pharma. It is built using SvelteKit 2, Svelte 5, and Tailwind CSS, with a focus on providing a responsive, accessible, and user-friendly interface for monitoring various aspects of pharmaceutical production.
 
-## Tech Stack
+## Tech Stack (Latest)
 
-- **Frontend Framework:** Svelte 5.0.0 with SvelteKit 2.16.0
-- **Build Tool:** Vite 6.2.6
-- **Styling:** Tailwind CSS 4.0.0
-- **Language:** TypeScript 5.0.0
-- **Deployment:** Node.js (via @sveltejs/adapter-node)
+- **Frontend Framework:** Svelte 5.33.14 with SvelteKit 2.21.2
+- **Build Tool:** Vite 6.3.5
+- **Styling:** Tailwind CSS 4.1.8
+- **Language:** TypeScript 5.8.3
+- **Deployment:** Node.js (via @sveltejs/adapter-node 5.2.12)
+- **UI Components:** bits-ui 2.4.1, svelte-sonner 1.0.4, @lucide/svelte 0.511.0
+- **Form & Validation:** sveltekit-superforms 2.26.0, zod 3.25.51
+- **Linting & Formatting:** eslint 9.28.0, prettier 3.5.3, eslint-plugin-svelte 3.9.1, prettier-plugin-tailwindcss 0.6.12
+- **Utilities:** clsx 2.1.1, tailwind-merge 3.3.0, tailwind-variants 1.0.0, tw-animate-css 1.3.4
 
 ## Key Features
 
@@ -160,4 +164,4 @@ You can save this as `README.md` in the root of your repository to provide immed
 
 This repository contains only the compiled version of the monitoring system. It is updated automatically via GitHub Actions.
 
-Last updated: Wed Jun  4 09:51:31 UTC 2025
+Last updated: Wed Jun  4 10:09:54 UTC 2025
