@@ -1,167 +1,185 @@
-# PT. Satoria Aneka Pharma Monitoring System
+# Svelte Satoria
+
+A comprehensive SvelteKit-based industrial monitoring and configuration application with real-time capabilities for device management and alarm systems.
+
+![Satoria Logo](src/assets/logo2.png)
 
 ## Overview
 
-This project is a modern web application for monitoring systems at PT. Satoria Aneka Pharma. It is built using SvelteKit 2, Svelte 5, and Tailwind CSS, with a focus on providing a responsive, accessible, and user-friendly interface for monitoring various aspects of pharmaceutical production.
+Svelte Satoria is a modern web application built for configuring and monitoring industrial devices, with a focus on temperature and pressure alarms. It features a responsive UI, real-time notifications, and comprehensive configuration options.
 
-## Tech Stack (Latest)
+## Features
 
-- **Frontend Framework:** Svelte 5.33.14 with SvelteKit 2.21.2
-- **Build Tool:** Vite 6.3.5
-- **Styling:** Tailwind CSS 4.1.8
-- **Language:** TypeScript 5.8.3
-- **Deployment:** Node.js (via @sveltejs/adapter-node 5.2.12)
-- **UI Components:** bits-ui 2.4.1, svelte-sonner 1.0.4, @lucide/svelte 0.511.0
-- **Form & Validation:** sveltekit-superforms 2.26.0, zod 3.25.51
-- **Linting & Formatting:** eslint 9.28.0, prettier 3.5.3, eslint-plugin-svelte 3.9.1, prettier-plugin-tailwindcss 0.6.12
-- **Utilities:** clsx 2.1.1, tailwind-merge 3.3.0, tailwind-variants 1.0.0, tw-animate-css 1.3.4
+- **Modular Configuration**: Customize temperature and pressure alarm thresholds
+- **Real-time Monitoring**: Live device status and alert notifications
+- **User Authentication**: Secure access control with account management
+- **Responsive UI**: Adapts to different screen sizes and devices
+- **Database Integration**: Persistent storage with Postgres and Drizzle ORM
+- **Docker Support**: Containerized development environment
 
-## Key Features
+## Technology Stack
 
-- Modern UI components via shadcn/ui and bits-ui
-- Responsive design that works across all device sizes
-- Dark/light mode theming
-- Authentication via JWT
-- Form handling with validation (via sveltekit-superforms and zod)
-- Custom OKLCH color system for improved color accessibility
+### Core Framework
+- **SvelteKit**: ^2.16.0
+- **Svelte**: ^5.0.0 (Using the new Runes API)
+- **TypeScript**: ^5.0.0
+- **Vite**: ^6.2.6
+
+### UI Components
+- **TailwindCSS**: ^4.0.0
+- **Shadcn UI**: Custom Svelte implementation
+- **Lucide Icons**: ^0.514.0
+- **Bits UI**: ^2.5.0
+- **ECharts**: ^5.6.0 (For data visualization)
+- **Svelte Sonner**: ^1.0.3 (Toast notifications)
+
+### Backend and Data
+- **Drizzle ORM**: ^0.40.0
+- **Postgres**: ^3.4.5
+- **Redis**: For caching and real-time features
+- **Zod**: ^3.25.13 (Schema validation)
+- **Superforms**: ^2.25.0 (Form handling)
+
+### Development Tools
+- **ESLint**: ^9.18.0
+- **Prettier**: ^3.4.2
+- **Docker/Docker Compose**: For development environment
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v18+)
+- Docker and Docker Compose
+- PostgreSQL
+- Redis
+
+### Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-username/svelte-satoria.git
+   cd svelte-satoria
+   ```
+
+2. Install dependencies:
+   ```sh
+   npm install
+   # or
+   bun install
+   ```
+
+3. Start the database:
+   ```sh
+   npm run db:start
+   ```
+
+4. Run database migrations:
+   ```sh
+   npm run db:migrate
+   ```
+
+5. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+6. Access the application at `http://localhost:5173`
 
 ## Project Structure
 
-The application follows the SvelteKit conventional structure:
-
-- `/src/routes` - Application routes and pages
-- `/src/lib` - Shared components, utilities, and types
-- `/src/shadcn/components` - UI components built with Tailwind CSS
-- `/src/assets` - Static assets like images and fonts
-- `/static` - Files served directly by the server
-
-## Installation
-
-```bash
-# Clone the repository (requires permission)
-git clone [repository-url]
-
-# Navigate to project directory
-cd svelte-satoria
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+```
+svelte-satoria/
+├── src/                   # Source code
+│   ├── assets/            # Static assets
+│   ├── components/        # UI components
+│   │   ├── app-sidebar.svelte
+│   │   ├── app-topbar.svelte
+│   │   ├── account-app/   # Account management components
+│   │   ├── configuration/ # Configuration components
+│   │   └── ...
+│   ├── lib/               # Utilities and shared logic
+│   │   ├── server/        # Server-side utilities
+│   │   ├── sidebar/       # Sidebar configuration
+│   │   └── utils/         # Helper functions
+│   ├── routes/            # SvelteKit routes
+│   │   ├── (app)/         # Main application routes
+│   │   ├── (login)/       # Authentication routes
+│   │   └── (print)/       # Printable views
+│   ├── shadcn/            # Shadcn UI components
+│   └── app.css            # Global styles
+├── drizzle/               # Database migrations
+├── redis/                 # Redis configuration
+├── static/                # Static files
+├── drizzle.config.ts      # Drizzle ORM configuration
+├── svelte.config.js       # SvelteKit configuration
+├── tailwind.config.js     # TailwindCSS configuration
+├── docker-compose.yml     # Docker services configuration
+└── package.json           # Dependencies and scripts
 ```
 
-## Dependencies and Plugins
+## Database Management
 
-### Core Dependencies
+The application uses Drizzle ORM with PostgreSQL. Manage your database with these commands:
 
-| Package                | Version | Purpose                              |
-| ---------------------- | ------- | ------------------------------------ |
-| svelte                 | 5.0.0   | Core UI framework                    |
-| @sveltejs/kit          | 2.16.0  | Full-stack framework built on Svelte |
-| @sveltejs/adapter-node | 5.2.12  | Adapter for Node.js deployment       |
-| typescript             | 5.0.0   | Type safety and developer tooling    |
+```sh
+# Start the database
+npm run db:start
 
-### UI and Styling
+# Apply schema changes
+npm run db:push
 
-| Package            | Version | Purpose                                    |
-| ------------------ | ------- | ------------------------------------------ |
-| tailwindcss        | 4.0.0   | Utility-first CSS framework                |
-| @tailwindcss/forms | 0.5.9   | Form styling for Tailwind                  |
-| @tailwindcss/vite  | 4.0.0   | Tailwind integration for Vite              |
-| bits-ui            | 1.5.3   | Accessible UI primitives                   |
-| clsx               | 2.1.1   | Utility for constructing className strings |
-| tailwind-merge     | 3.3.0   | Merges Tailwind CSS classes                |
-| tailwind-variants  | 0.2.1   | Creates variants of Tailwind styles        |
-| tw-animate-css     | 1.3.0   | Animation utilities for Tailwind CSS       |
-| @lucide/svelte     | 0.482.0 | Icon library for Svelte                    |
+# Generate and run migrations
+npm run db:migrate
 
-### Development Tools
+# Open Drizzle Studio to manage data
+npm run db:studio
+```
 
-| Package                     | Version | Purpose                                |
-| --------------------------- | ------- | -------------------------------------- |
-| vite                        | 6.2.6   | Fast development server and build tool |
-| eslint                      | 9.18.0  | Code linting                           |
-| prettier                    | 3.4.2   | Code formatting                        |
-| svelte-check                | 4.0.0   | Static analysis for Svelte components  |
-| @eslint/js                  | 9.18.0  | ESLint JavaScript configuration        |
-| @eslint/compat              | 1.2.5   | Compatibility helpers for ESLint       |
-| eslint-config-prettier      | 10.0.1  | Integrates Prettier with ESLint        |
-| eslint-plugin-svelte        | 3.0.0   | ESLint rules for Svelte                |
-| prettier-plugin-svelte      | 3.3.3   | Prettier support for Svelte            |
-| prettier-plugin-tailwindcss | 0.6.11  | Auto-sorts Tailwind classes            |
-| typescript-eslint           | 8.20.0  | TypeScript support for ESLint          |
+## Configuration Options
 
-### Utility Libraries
+### Temperature and Pressure Alarms
 
-| Package              | Version | Purpose                                      |
-| -------------------- | ------- | -------------------------------------------- |
-| @oslojs/jwt          | 0.3.0   | JWT handling for authentication              |
-| zod                  | 3.25.13 | TypeScript-first schema validation           |
-| sveltekit-superforms | 2.25.0  | Form handling for SvelteKit                  |
-| globals              | 16.0.0  | Global variables for JavaScript environments |
+The application allows setting up thresholds for temperature and pressure values:
 
-### IDE Support
+- **Low Threshold**: Triggers an alarm when values fall below this point
+- **High Threshold**: Triggers an alarm when values exceed this point
+- **Custom Messages**: Configurable notification messages with dynamic value placeholders
 
-| Package                      | Version | Purpose                      |
-| ---------------------------- | ------- | ---------------------------- |
-| @tailwindcss/language-server | 0.14.17 | IDE support for Tailwind CSS |
-| svelte-language-server       | 0.17.14 | Language server for Svelte   |
-| typescript-svelte-plugin     | 0.3.47  | TypeScript plugin for Svelte |
+## Deployment
 
-## Theming
+### Production Build
 
-The application uses a custom theme system built with OKLCH color space for improved perceptual uniformity. The theme supports both light and dark modes with the following key design tokens:
+```sh
+npm run build
+```
 
-- **Colors:** Primary, secondary, muted, accent, and destructive colors
-- **UI Elements:** Background, foreground, card, popover, border, and input styles
-- **Sidebar:** Custom styling for the application sidebar
-- **Radius:** Consistent border radius throughout the application
+The application uses the SvelteKit Node adapter and can be deployed to any Node.js hosting environment.
 
-## Layout System
+### Docker Deployment
 
-The application uses a responsive layout system with:
-
-- A main application layout with sidebar navigation
-- A separate authentication layout for login/registration pages
-- Responsive design that adapts to different screen sizes
-
-## Scripts
-
-| Command           | Description               |
-| ----------------- | ------------------------- |
-| `npm run dev`     | Start development server  |
-| `npm run build`   | Build for production      |
-| `npm run preview` | Preview production build  |
-| `npm run check`   | Run type checking         |
-| `npm run format`  | Format code with Prettier |
-| `npm run lint`    | Lint code with ESLint     |
+A production Dockerfile is available for containerized deployment.
 
 ## Contributing
 
-This is a proprietary project for PT. Satoria Aneka Pharma. All contributions must be approved by the repository owner. Please refer to the LICENSE.md file for usage restrictions.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under a proprietary license. See the [LICENSE.md](./LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
-## Contact
+## Acknowledgments
 
-For any inquiries regarding this project, please contact PT. Satoria Aneka Pharma.
-This documentation provides a comprehensive overview of your project, including the tech stack, dependencies, project structure, and usage instructions. It's organized in a clear and professional manner that will help both new developers understand the project and serve as a reference for existing team members.
-
-The document covers all the plugins and libraries used in your project as shown in the package.json file, along with explanations of their purpose. It also includes information about the theming system as shown in your app.css file and the layout structure based on your +layout.svelte files.
-
-You can save this as `README.md` in the root of your repository to provide immediate documentation for anyone accessing the project.
+- [SvelteKit](https://kit.svelte.dev/)
+- [Shadcn UI](https://ui.shadcn.com/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Drizzle ORM](https://orm.drizzle.team/)
 
 ## Release Information
 
 This repository contains only the compiled version of the monitoring system. It is updated automatically via GitHub Actions.
 
-Last updated: Thu Jun  5 09:35:13 UTC 2025
+Last updated: Fri Jun 13 08:55:30 UTC 2025
