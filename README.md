@@ -1,185 +1,199 @@
-# Svelte Satoria
+# Svelte Satoria - Industrial Process Management (v0.0.1)
 
-A comprehensive SvelteKit-based industrial monitoring and configuration application with real-time capabilities for device management and alarm systems.
+Svelte Satoria is a web application designed for configuring, managing, and monitoring industrial processes, likely for ATV (Automated Test Vehicle or similar) lines. It provides a user-friendly interface for operators and administrators to interact with machine settings and oversee operations.
 
-![Satoria Logo](src/assets/logo2.png)
+This application is built with SvelteKit and leverages modern web technologies to deliver a responsive and efficient user experience.
 
-## Overview
+## Tech Stack
 
-Svelte Satoria is a modern web application built for configuring and monitoring industrial devices, with a focus on temperature and pressure alarms. It features a responsive UI, real-time notifications, and comprehensive configuration options.
+*   **Framework:** SvelteKit (`^2.21.5`)
+*   **Language:** TypeScript (`^5.8.3`)
+*   **UI Library:** Svelte (`^5.34.2`)
+*   **Styling:**
+    *   Tailwind CSS (`^4.1.10`)
+    *   `bits-ui` (`^2.7.0`) - UI components
+    *   `clsx` (`^2.1.1`) & `tailwind-merge` (`^3.3.1`) - Class name utilities
+    *   `tailwind-variants` (`^1.0.0`) - Variant management
+    *   `tw-animate-css` (`^1.3.4`) - Animations
+    *   `mode-watcher` (`^1.0.8`) - Dark mode / theme management
+*   **Forms:**
+    *   `sveltekit-superforms` (`^2.26.1`)
+    *   `formsnap` (`^2.0.1`)
+    *   `zod` (`^3.25.64`) - Schema validation
+*   **Authentication & Security:**
+    *   `jose` (`^6.0.11`) - JWT (JSON Web Token) handling
+    *   `bcrypt` (`^6.0.0`) - Password hashing
+*   **Database & ORM:**
+    *   PostgreSQL (inferred from `pg` driver and Drizzle config)
+    *   `drizzle-orm` (`^0.44.2`)
+    *   `drizzle-kit` (`^0.31.1`) - Drizzle ORM tooling
+    *   `pg` (`^8.16.0`) - Node.js PostgreSQL client
+*   **API & Server:**
+    *   SvelteKit server-side capabilities
+    *   `@sveltejs/adapter-node` (`^5.2.12`) - Node.js adapter for SvelteKit
+*   **Charting:**
+    *   `echarts` (`^5.6.0`)
+*   **Linting & Formatting:**
+    *   ESLint (`^9.29.0`)
+    *   Prettier (`^3.5.3`)
+    *   `eslint-plugin-svelte` (`^3.9.2`)
+    *   `prettier-plugin-svelte` (`^3.4.0`)
+    *   `prettier-plugin-tailwindcss` (`^0.6.12`)
+*   **Development Tools:**
+    *   Vite (`^6.3.5`)
+    *   `svelte-check` (`^4.2.1`)
+    *   `tsx` (`^4.20.3`) - TypeScript execution
+*   **Runtime Environment (likely):** Bun (inferred from `bun.lock`)
+*   **Other Notable Libraries:**
+    *   `dotenv` (`^16.5.0`) - Environment variable management
+    *   `node-device-detector` (`^2.2.2`) - Device detection
+    *   `svelte-sonner` (`^1.0.5`) - Toast notifications
+    *   `@lucide/svelte` (`^0.515.0`) - Icon library
 
-## Features
+## Key Features
 
-- **Modular Configuration**: Customize temperature and pressure alarm thresholds
-- **Real-time Monitoring**: Live device status and alert notifications
-- **User Authentication**: Secure access control with account management
-- **Responsive UI**: Adapts to different screen sizes and devices
-- **Database Integration**: Persistent storage with Postgres and Drizzle ORM
-- **Docker Support**: Containerized development environment
+*   **User Authentication:** Secure login, registration, and session management using JWT.
+*   **Role-Based Access Control:** Different views and capabilities for regular users and administrators.
+*   **Device/Machine Configuration:** Detailed forms for setting parameters for various process stages:
+    *   Heating (`form-heating.svelte`)
+    *   Preparation (`form-prepare.svelte`)
+    *   Filling (`form-filling.svelte`)
+    *   Sterilization (`form-sterilization.svelte`)
+*   **Process Monitoring:** Includes a section for real-time monitoring of machine status, alarms, and potentially charts for temperature and other metrics.
+*   **Account Management:** Features for users to manage their credentials (e.g., password changes).
+*   **Admin Panel:** Capabilities for administrators to manage devices, user accounts, and potentially system-wide settings.
+*   **Responsive UI:** Utilizes Tailwind CSS for a modern and adaptable user interface across different devices.
+*   **Dark Mode:** Supports light and dark themes, configurable via CSS variables and `mode-watcher`.
+*   **Toast Notifications:** Provides user feedback for actions like saving configurations.
 
-## Technology Stack
+## Project Structure Highlights
 
-### Core Framework
-- **SvelteKit**: ^2.16.0
-- **Svelte**: ^5.0.0 (Using the new Runes API)
-- **TypeScript**: ^5.0.0
-- **Vite**: ^6.2.6
-
-### UI Components
-- **TailwindCSS**: ^4.0.0
-- **Shadcn UI**: Custom Svelte implementation
-- **Lucide Icons**: ^0.514.0
-- **Bits UI**: ^2.5.0
-- **ECharts**: ^5.6.0 (For data visualization)
-- **Svelte Sonner**: ^1.0.3 (Toast notifications)
-
-### Backend and Data
-- **Drizzle ORM**: ^0.40.0
-- **Postgres**: ^3.4.5
-- **Redis**: For caching and real-time features
-- **Zod**: ^3.25.13 (Schema validation)
-- **Superforms**: ^2.25.0 (Form handling)
-
-### Development Tools
-- **ESLint**: ^9.18.0
-- **Prettier**: ^3.4.2
-- **Docker/Docker Compose**: For development environment
+*   `src/lib/server/db/`: Contains database schema (`schema.ts`), Drizzle ORM setup (`index.ts`), and Zod schemas for validation (`schemaZod.ts`).
+*   `src/lib/server/middleware/Authentication.ts`: Handles JWT-based authentication logic.
+*   `src/lib/utils/configuration/config-atva.ts`: Defines types and potentially default values for ATV machine configurations.
+*   `src/routes/(app)/configuration/lineX/atva/`: Contains the Svelte components for different machine configuration forms (heating, prepare, filling, sterilization).
+*   `src/routes/(app)/account/`: User account management pages.
+*   `src/routes/(admin)/`: Admin-specific routes for user and device management.
+*   `src/app.css`: Defines global styles, Tailwind CSS setup, and oklch color variables for theming (light and dark modes).
+*   `src/app.d.ts`: TypeScript definitions for the application, including extending `App.Locals` for JWT utilities.
+*   `src/hooks.server.ts`: Server-side hooks for initializing JWT utilities and handling other requests.
+*   `drizzle/`: Contains database migration files generated by Drizzle Kit.
 
 ## Getting Started
 
-### Prerequisites
-- Node.js (v18+)
-- Docker and Docker Compose
-- PostgreSQL
-- Redis
+1.  **Clone the repository (if applicable):**
+    ```bash
+    git clone <repository-url>
+    cd svelte-satoria
+    ```
 
-### Installation
+2.  **Install dependencies:**
+    Given the presence of `bun.lock`, Bun is the recommended package manager.
+    ```bash
+    bun install
+    ```
+    Alternatively, if you prefer npm or yarn, delete `bun.lock` and run `npm install` or `yarn install`.
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/your-username/svelte-satoria.git
-   cd svelte-satoria
-   ```
+3.  **Set up environment variables:**
+    Create a `.env` file in the root directory. This file should contain necessary environment variables such as:
+    *   `DATABASE_URL`: Connection string for your PostgreSQL database (e.g., `postgresql://user:password@host:port/database`).
+    *   `JWT_SECRET`: A strong secret key for signing JWTs.
+    *   Other environment-specific configurations.
+    (Refer to any `.env.example` if available, or check the code for required variables, e.g., in `src/lib/server/middleware/Authentication.ts`).
 
-2. Install dependencies:
-   ```sh
-   npm install
-   # or
-   bun install
-   ```
+4.  **Database Setup & Migrations:**
+    *   Ensure your PostgreSQL server is running and accessible.
+    *   Apply database migrations using Drizzle Kit (scripts are available in `package.json`):
+        ```bash
+        bun run db:push # Applies pending migrations directly
+        # OR for generating migration files:
+        # bun run db:migrate 
+        ```
+        If you generate migration files, you might need to apply them using a separate command or ensure your application handles this. `db:push` is often simpler for development.
 
-3. Start the database:
-   ```sh
-   npm run db:start
-   ```
+5.  **Run the development server:**
+    ```bash
+    bun run dev
+    ```
+    The application should now be running, typically on `http://localhost:5173`.
 
-4. Run database migrations:
-   ```sh
-   npm run db:migrate
-   ```
+## Available Scripts (from `package.json`)
 
-5. Start the development server:
-   ```sh
-   npm run dev
-   ```
+*   `dev`: Starts the development server using Vite.
+*   `build`: Builds the application for production using Vite.
+*   `preview`: Previews the production build locally.
+*   `prepare`: SvelteKit sync script (ensures type safety and generates necessary files).
+*   `check`: Runs SvelteKit sync and performs type-checking using `svelte-check`.
+*   `check:watch`: Runs SvelteKit sync and type-checking in watch mode.
+*   `format`: Formats the codebase using Prettier.
+*   `lint`: Checks formatting with Prettier and lints with ESLint.
+*   `db:start`: Starts the database using Docker Compose (assumes `docker-compose.yml` is configured for PostgreSQL).
+*   `db:push`: Pushes schema changes directly to the database using Drizzle Kit.
+*   `db:migrate`: Generates SQL migration files based on schema changes using Drizzle Kit.
+*   `db:studio`: Opens Drizzle Studio to browse and manage your database.
 
-6. Access the application at `http://localhost:5173`
+## Main Dependencies (`dependencies` in `package.json`)
 
-## Project Structure
+*   `@tailwindcss/language-server`: `^0.14.21`
+*   `bcrypt`: `^6.0.0`
+*   `dotenv`: `^16.5.0`
+*   `drizzle-orm`: `^0.44.2`
+*   `echarts`: `^5.6.0`
+*   `jose`: `^6.0.11`
+*   `node-device-detector`: `^2.2.2`
+*   `pg`: `^8.16.0`
+*   `postgres`: `^3.4.7` (Note: `pg` is generally used with Drizzle for PostgreSQL; `postgres` might be for a specific use or an alternative)
+*   `svelte-language-server`: `^0.17.15`
+*   `svelte-sonner`: `^1.0.5`
+*   `sveltekit-superforms`: `^2.26.1`
+*   `typescript-svelte-plugin`: `^0.3.47`
+*   `zod`: `^3.25.64`
 
-```
-svelte-satoria/
-├── src/                   # Source code
-│   ├── assets/            # Static assets
-│   ├── components/        # UI components
-│   │   ├── app-sidebar.svelte
-│   │   ├── app-topbar.svelte
-│   │   ├── account-app/   # Account management components
-│   │   ├── configuration/ # Configuration components
-│   │   └── ...
-│   ├── lib/               # Utilities and shared logic
-│   │   ├── server/        # Server-side utilities
-│   │   ├── sidebar/       # Sidebar configuration
-│   │   └── utils/         # Helper functions
-│   ├── routes/            # SvelteKit routes
-│   │   ├── (app)/         # Main application routes
-│   │   ├── (login)/       # Authentication routes
-│   │   └── (print)/       # Printable views
-│   ├── shadcn/            # Shadcn UI components
-│   └── app.css            # Global styles
-├── drizzle/               # Database migrations
-├── redis/                 # Redis configuration
-├── static/                # Static files
-├── drizzle.config.ts      # Drizzle ORM configuration
-├── svelte.config.js       # SvelteKit configuration
-├── tailwind.config.js     # TailwindCSS configuration
-├── docker-compose.yml     # Docker services configuration
-└── package.json           # Dependencies and scripts
-```
+## Development Dependencies (`devDependencies` in `package.json`)
 
-## Database Management
-
-The application uses Drizzle ORM with PostgreSQL. Manage your database with these commands:
-
-```sh
-# Start the database
-npm run db:start
-
-# Apply schema changes
-npm run db:push
-
-# Generate and run migrations
-npm run db:migrate
-
-# Open Drizzle Studio to manage data
-npm run db:studio
-```
-
-## Configuration Options
-
-### Temperature and Pressure Alarms
-
-The application allows setting up thresholds for temperature and pressure values:
-
-- **Low Threshold**: Triggers an alarm when values fall below this point
-- **High Threshold**: Triggers an alarm when values exceed this point
-- **Custom Messages**: Configurable notification messages with dynamic value placeholders
-
-## Deployment
-
-### Production Build
-
-```sh
-npm run build
-```
-
-The application uses the SvelteKit Node adapter and can be deployed to any Node.js hosting environment.
-
-### Docker Deployment
-
-A production Dockerfile is available for containerized deployment.
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+*   `@eslint/compat`: `^1.3.0`
+*   `@eslint/js`: `^9.29.0`
+*   `@internationalized/date`: `^3.8.2`
+*   `@lucide/svelte`: `^0.515.0`
+*   `@sveltejs/adapter-node`: `^5.2.12`
+*   `@sveltejs/kit`: `^2.21.5`
+*   `@sveltejs/vite-plugin-svelte`: `^5.1.0`
+*   `@tailwindcss/forms`: `^0.5.10`
+*   `@tailwindcss/vite`: `^4.1.10`
+*   `@tanstack/table-core`: `^8.21.3`
+*   `@types/bcrypt`: `^5.0.2`
+*   `@types/node`: `^24.0.1`
+*   `@types/pg`: `^8.15.4`
+*   `bits-ui`: `^2.7.0`
+*   `clsx`: `^2.1.1`
+*   `drizzle-kit`: `^0.31.1`
+*   `eslint`: `^9.29.0`
+*   `eslint-config-prettier`: `^10.1.5`
+*   `eslint-plugin-svelte`: `^3.9.2`
+*   `formsnap`: `^2.0.1`
+*   `globals`: `^16.2.0`
+*   `mode-watcher`: `^1.0.8`
+*   `prettier`: `^3.5.3`
+*   `prettier-plugin-svelte`: `^3.4.0`
+*   `prettier-plugin-tailwindcss`: `^0.6.12`
+*   `svelte`: `^5.34.2`
+*   `svelte-check`: `^4.2.1`
+*   `tailwind-merge`: `^3.3.1`
+*   `tailwind-variants`: `^1.0.0`
+*   `tailwindcss`: `^4.1.10`
+*   `tsx`: `^4.20.3`
+*   `tw-animate-css`: `^1.3.4`
+*   `typescript`: `^5.8.3`
+*   `typescript-eslint`: `^8.34.0`
+*   `vite`: `^6.3.5`
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+Refer to the `LICENSE.md` file for licensing information.
 
-## Acknowledgments
-
-- [SvelteKit](https://kit.svelte.dev/)
-- [Shadcn UI](https://ui.shadcn.com/)
-- [TailwindCSS](https://tailwindcss.com/)
-- [Drizzle ORM](https://orm.drizzle.team/)
 
 ## Release Information
 
 This repository contains only the compiled version of the monitoring system. It is updated automatically via GitHub Actions.
 
-Last updated: Fri Jun 13 08:55:30 UTC 2025
+Last updated: Sat Jun 14 17:52:40 UTC 2025
